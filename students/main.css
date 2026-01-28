@@ -1,0 +1,28 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+    color: bisque;
+
+}
+
+h3 {
+    color: bisque;
+}
+
+h3 span {
+    color: black;
+}
+
+h4 {
+    color: bisque;
+}
+
+h4 span {
+    color: black;
+}
+
+h2 {
+    color: red;
+}
