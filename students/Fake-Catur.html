@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Loading...</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #0f0f0f;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+    }
+
+    #loading {
+      text-align: center;
+    }
+
+    .countdown {
+      margin-top: 12px;
+      font-size: 14px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="loading">
+    <h1>Halo Semua Nama Gw JOKOUI</h2>
+	<h3>Test Doang Kok bg :)</h3>
+    <div class="countdown">
+      Melanjutkan dalam <span id="timer">8</span> detik
+    </div>
+  </div>
+
+  <script>
+    let timeLeft = 8;
+    const timerEl = document.getElementById("timer");
+
+    const countdown = setInterval(() => {
+      timeLeft--;
+      timerEl.textContent = timeLeft;
+
+      if (timeLeft <= 0) {
+        clearInterval(countdown);
+        window.location.href = "Catur.html"; // TUJUAN REDIRECT
+      }
+    }, 1000);
+  </script>
+
+</body>
+</html>
