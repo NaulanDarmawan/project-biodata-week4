@@ -1,0 +1,5293 @@
+<!DOCTYPE html>
+
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Parallax Multi-Layer - Website Modern</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌌</text></svg>">
+
+</head>
+
+<style>
+
+    /* =============================================
+
+   VARIABLES & RESET
+
+============================================= */
+
+:root {
+
+    /* Color Palette dengan variasi yang lebih halus */
+
+    --primary: #0a0a1a;
+
+    --secondary: #121230;
+
+    --accent: #3a6bc9;
+
+    --accent-light: #5a8dee;
+
+    --accent-glow: rgba(90, 141, 238, 0.4);
+
+    --text: #f0f0f0;
+
+    --text-light: #c2c2d6;
+
+    --light: #ffffff;
+
+    --shadow: rgba(0, 0, 0, 0.4);
+
+    --overlay: rgba(10, 10, 26, 0.85);
+
+    --overlay-gradient: linear-gradient(135deg, rgba(10, 10, 26, 0.9) 0%, rgba(18, 18, 48, 0.7) 100%);
+
+    
+
+    /* Typography */
+
+    --font-heading: 'Montserrat', sans-serif;
+
+    --font-body: 'Poppins', sans-serif;
+
+    
+
+    /* Spacing */
+
+    --section-padding: 100px 0;
+
+    --container-width: 1200px;
+
+    --border-radius: 16px;
+
+    --card-radius: 20px;
+
+    --transition-slow: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+
+    --transition-medium: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    --transition-fast: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    
+
+    /* Z-index layers */
+
+    --z-preloader: 9999;
+
+    --z-nav: 1000;
+
+    --z-hero-content: 20;
+
+    --z-parallax: 5;
+
+    --z-overlay: 10;
+
+    --z-particles: 15;
+
+    --z-back-to-top: 999;
+
+}
+
+
+
+* {
+
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+}
+
+
+
+html {
+
+    scroll-behavior: smooth;
+
+    font-size: 16px;
+
+}
+
+
+
+body {
+
+    font-family: var(--font-body);
+
+    color: var(--text);
+
+    background-color: var(--primary);
+
+    overflow-x: hidden;
+
+    line-height: 1.7;
+
+    opacity: 0;
+
+    animation: bodyFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+
+}
+
+
+
+@keyframes bodyFadeIn {
+
+    to { opacity: 1; }
+
+}
+
+
+
+.container {
+
+    width: 100%;
+
+    max-width: var(--container-width);
+
+    margin: 0 auto;
+
+    padding: 0 20px;
+
+}
+
+
+
+/* =============================================
+
+   PRELOADER
+
+============================================= */
+
+.preloader {
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    background: var(--primary);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: var(--z-preloader);
+
+    transition: opacity 0.8s var(--transition-slow), visibility 0.8s var(--transition-slow);
+
+}
+
+
+
+.preloader.loaded {
+
+    opacity: 0;
+
+    visibility: hidden;
+
+}
+
+
+
+.preloader-inner {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+
+.preloader-circle {
+
+    width: 80px;
+
+    height: 80px;
+
+    border-radius: 50%;
+
+    border: 3px solid transparent;
+
+    border-top-color: var(--accent-light);
+
+    border-right-color: var(--accent);
+
+    animation: preloaderSpin 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+
+    margin-bottom: 30px;
+
+    position: relative;
+
+}
+
+
+
+.preloader-circle::before {
+
+    content: '';
+
+    position: absolute;
+
+    top: 10px;
+
+    left: 10px;
+
+    right: 10px;
+
+    bottom: 10px;
+
+    border-radius: 50%;
+
+    border: 3px solid transparent;
+
+    border-top-color: var(--accent);
+
+    border-right-color: var(--accent-light);
+
+    animation: preloaderSpin 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite reverse;
+
+}
+
+
+
+@keyframes preloaderSpin {
+
+    0% { transform: rotate(0deg); }
+
+    100% { transform: rotate(360deg); }
+
+}
+
+
+
+.preloader-text {
+
+    font-size: 1.2rem;
+
+    color: var(--text-light);
+
+    font-weight: 300;
+
+    letter-spacing: 2px;
+
+    animation: preloaderPulse 2s ease-in-out infinite;
+
+}
+
+
+
+@keyframes preloaderPulse {
+
+    0%, 100% { opacity: 0.6; }
+
+    50% { opacity: 1; }
+
+}
+
+
+
+/* =============================================
+
+   TYPOGRAPHY & UTILITIES
+
+============================================= */
+
+h1, h2, h3, h4, h5, h6 {
+
+    font-family: var(--font-heading);
+
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    margin-bottom: 1.2rem;
+
+}
+
+
+
+h1 {
+
+    font-size: 4rem;
+
+    background: linear-gradient(135deg, var(--light) 0%, var(--accent-light) 100%);
+
+    -webkit-background-clip: text;
+
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+}
+
+
+
+h2 {
+
+    font-size: 3rem;
+
+    color: var(--light);
+
+}
+
+
+
+h3 {
+
+    font-size: 2rem;
+
+    color: var(--light);
+
+}
+
+
+
+p {
+
+    margin-bottom: 1.5rem;
+
+    font-weight: 300;
+
+}
+
+
+
+a {
+
+    text-decoration: none;
+
+    color: inherit;
+
+    transition: var(--transition-fast);
+
+}
+
+
+
+/* =============================================
+
+   SECTION STYLES
+
+============================================= */
+
+.section {
+
+    padding: var(--section-padding);
+
+    position: relative;
+
+    overflow: hidden;
+
+}
+
+
+
+.section-header {
+
+    text-align: center;
+
+    margin-bottom: 80px;
+
+    opacity: 0;
+
+    transform: translateY(30px);
+
+    transition: opacity 1s var(--transition-slow), transform 1s var(--transition-slow);
+
+}
+
+
+
+.section-header.visible {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+}
+
+
+
+.section-title {
+
+    position: relative;
+
+    display: inline-block;
+
+    margin-bottom: 20px;
+
+}
+
+
+
+.section-title::after {
+
+    content: '';
+
+    position: absolute;
+
+    width: 100px;
+
+    height: 5px;
+
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+
+    bottom: -15px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    border-radius: 5px;
+
+    box-shadow: 0 5px 15px var(--accent-glow);
+
+}
+
+
+
+.section-subtitle {
+
+    font-size: 1.3rem;
+
+    color: var(--text-light);
+
+    max-width: 700px;
+
+    margin: 30px auto 0;
+
+    font-weight: 300;
+
+    opacity: 0;
+
+    transform: translateY(20px);
+
+    transition: opacity 1s var(--transition-slow) 0.2s, transform 1s var(--transition-slow) 0.2s;
+
+}
+
+
+
+.section-header.visible .section-subtitle {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+}
+
+
+
+/* =============================================
+
+   BUTTONS
+
+============================================= */
+
+.btn-primary, .btn-secondary {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 18px 40px;
+
+    border-radius: 50px;
+
+    font-weight: 600;
+
+    font-family: var(--font-heading);
+
+    border: none;
+
+    cursor: pointer;
+
+    transition: var(--transition-medium);
+
+    position: relative;
+
+    overflow: hidden;
+
+    z-index: 1;
+
+}
+
+
+
+.btn-primary {
+
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+
+    color: var(--light);
+
+    box-shadow: 0 10px 30px rgba(58, 107, 201, 0.4);
+
+}
+
+
+
+.btn-primary::before {
+
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+
+    left: -100%;
+
+    width: 100%;
+
+    height: 100%;
+
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+
+    transition: left 0.7s ease;
+
+    z-index: -1;
+
+}
+
+
+
+.btn-primary:hover::before {
+
+    left: 100%;
+
+}
+
+
+
+.btn-primary:hover {
+
+    transform: translateY(-5px) scale(1.05);
+
+    box-shadow: 0 15px 40px rgba(58, 107, 201, 0.6);
+
+}
+
+
+
+.btn-secondary {
+
+    background: transparent;
+
+    color: var(--light);
+
+    border: 2px solid rgba(255, 255, 255, 0.2);
+
+    backdrop-filter: blur(10px);
+
+}
+
+
+
+.btn-secondary:hover {
+
+    background: rgba(255, 255, 255, 0.1);
+
+    border-color: var(--accent-light);
+
+    transform: translateY(-5px);
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+
+}
+
+
+
+.btn-hero {
+
+    font-size: 1.1rem;
+
+    margin: 0 10px;
+
+}
+
+
+
+.btn-text {
+
+    margin-right: 10px;
+
+}
+
+
+
+.btn-icon {
+
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+}
+
+
+
+.btn-primary:hover .btn-icon {
+
+    transform: translateX(5px);
+
+}
+
+
+
+.hero-buttons {
+
+    display: flex;
+
+    justify-content: center;
+
+    margin-top: 40px;
+
+    opacity: 0;
+
+    transform: translateY(30px);
+
+    transition: opacity 1s var(--transition-slow) 0.4s, transform 1s var(--transition-slow) 0.4s;
+
+}
+
+
+
+.hero-content.visible .hero-buttons {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+}
+
+
+
+/* =============================================
+
+   NAVIGATION
+
+============================================= */
+
+.navbar {
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    background-color: rgba(10, 10, 26, 0.85);
+
+    backdrop-filter: blur(15px);
+
+    z-index: var(--z-nav);
+
+    padding: 25px 0;
+
+    transition: var(--transition-medium);
+
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+}
+
+
+
+.navbar.scrolled {
+
+    padding: 15px 0;
+
+    background-color: rgba(10, 10, 26, 0.95);
+
+    backdrop-filter: blur(20px);
+
+}
+
+
+
+.navbar .container {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+}
+
+
+
+.logo {
+
+    font-family: var(--font-heading);
+
+    font-size: 2rem;
+
+    font-weight: 800;
+
+    color: var(--light);
+
+    letter-spacing: 1px;
+
+    transition: var(--transition-fast);
+
+}
+
+
+
+.logo:hover {
+
+    transform: scale(1.05);
+
+}
+
+
+
+.logo span {
+
+    color: var(--accent-light);
+
+    position: relative;
+
+}
+
+
+
+.logo span::after {
+
+    content: '';
+
+    position: absolute;
+
+    bottom: 2px;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 3px;
+
+    background: var(--accent-light);
+
+    border-radius: 2px;
+
+    transform: scaleX(0);
+
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+}
+
+
+
+.logo:hover span::after {
+
+    transform: scaleX(1);
+
+}
+
+
+
+.nav-menu {
+
+    display: flex;
+
+    list-style: none;
+
+}
+
+
+
+.nav-link {
+
+    position: relative;
+
+    margin-left: 40px;
+
+    font-weight: 500;
+
+    font-family: var(--font-heading);
+
+    padding: 8px 0;
+
+    color: var(--text-light);
+
+    transition: var(--transition-fast);
+
+}
+
+
+
+.nav-link::before {
+
+    content: '';
+
+    position: absolute;
+
+    width: 0;
+
+    height: 2px;
+
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+
+    bottom: 0;
+
+    left: 0;
+
+    transition: width 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+}
+
+
+
+.nav-link:hover::before,
+
+.nav-link.active::before {
+
+    width: 100%;
+
+}
+
+
+
+.nav-link:hover,
+
+.nav-link.active {
+
+    color: var(--light);
+
+}
+
+
+
+.hamburger {
+
+    display: none;
+
+    cursor: pointer;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    height: 24px;
+
+    width: 32px;
+
+    z-index: var(--z-nav);
+
+}
+
+
+
+.bar {
+
+    height: 3px;
+
+    width: 100%;
+
+    background-color: var(--light);
+
+    border-radius: 3px;
+
+    transition: var(--transition-medium);
+
+    transform-origin: left center;
+
+}
+
+
+
+/* =============================================
+
+   HERO SECTION & PARALLAX LAYERS
+
+============================================= */
+
+.hero {
+
+    position: relative;
+
+    height: 100vh;
+
+    min-height: 700px;
+
+    width: 100%;
+
+    overflow: hidden;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+
+.parallax-layer {
+
+    position: absolute;
+
+    top: -10%;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 120%;
+
+    will-change: transform;
+
+    transform: translate3d(0, 0, 0);
+
+    backface-visibility: hidden;
+
+    perspective: 1000px;
+
+    z-index: var(--z-parallax);
+
+}
+
+
+
+.parallax-content {
+
+    width: 100%;
+
+    height: 100%;
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
+
+    filter: brightness(1.1) contrast(1.05);
+
+}
+
+
+
+/* Layer Background - Pergerakan paling lambat */
+
+.layer-bg .parallax-content {
+
+    background-image: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2093&q=80');
+
+}
+
+
+
+/* Layer Midground - Pergerakan sedang */
+
+.layer-mid .parallax-content {
+
+    background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+
+    mix-blend-mode: overlay;
+
+    opacity: 0.8;
+
+}
+
+
+
+/* Layer Foreground - Pergerakan paling cepat */
+
+.layer-fore .parallax-content {
+
+    background-image: url('https://images.unsplash.com/photo-1532601224476-15c79f2f7a51?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+
+    mix-blend-mode: screen;
+
+    opacity: 0.6;
+
+}
+
+
+
+/* Particle Effects */
+
+.particles {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    z-index: var(--z-particles);
+
+    pointer-events: none;
+
+}
+
+
+
+.overlay {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    z-index: var(--z-overlay);
+
+}
+
+
+
+.gradient-overlay {
+
+    width: 100%;
+
+    height: 100%;
+
+    background: var(--overlay-gradient);
+
+}
+
+
+
+.hero-content {
+
+    position: relative;
+
+    z-index: var(--z-hero-content);
+
+    text-align: center;
+
+    max-width: 900px;
+
+    margin: 0 auto;
+
+    padding-top: 10vh;
+
+    opacity: 0;
+
+    transform: translateY(40px);
+
+    transition: opacity 1.2s var(--transition-slow) 0.3s, transform 1.2s var(--transition-slow) 0.3s;
+
+}
+
+
+
+.hero-content.visible {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+}
+
+
+
+.hero-text-wrapper {
+
+    padding: 0 20px;
+
+}
+
+
+
+.hero-title {
+
+    margin-bottom: 25px;
+
+    font-size: 4.5rem;
+
+    line-height: 1.1;
+
+    opacity: 0;
+
+    transform: translateY(30px);
+
+    transition: opacity 1s var(--transition-slow) 0.5s, transform 1s var(--transition-slow) 0.5s;
+
+}
+
+
+
+.hero-content.visible .hero-title {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+}
+
+
+
+.hero-subtitle {
+
+    font-size: 1.4rem;
+
+    margin-bottom: 20px;
+
+    color: var(--text-light);
+
+    max-width: 700px;
+
+    margin-left: auto;
+
+    margin-right: auto;
+
+    font-weight: 300;
+
+    opacity: 0;
+
+    transform: translateY(30px);
+
+    transition: opacity 1s var(--transition-slow) 0.6s, transform 1s var(--transition-slow) 0.6s;
+
+}
+
+
+
+.hero-content.visible .hero-subtitle {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+}
+
+
+
+.scroll-indicator {
+
+    position: absolute;
+
+    bottom: 50px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    z-index: var(--z-hero-content);
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    opacity: 0;
+
+    animation: fadeInUp 1s ease 1.5s forwards;
+
+}
+
+
+
+@keyframes fadeInUp {
+
+    to {
+
+        opacity: 1;
+
+        transform: translateX(-50%) translateY(0);
+
+    }
+
+    from {
+
+        opacity: 0;
+
+        transform: translateX(-50%) translateY(20px);
+
+    }
+
+}
+
+
+
+.mouse {
+
+    display: block;
+
+    width: 32px;
+
+    height: 56px;
+
+    border: 2px solid rgba(255, 255, 255, 0.3);
+
+    border-radius: 20px;
+
+    position: relative;
+
+    margin-bottom: 15px;
+
+}
+
+
+
+.wheel {
+
+    display: block;
+
+    width: 4px;
+
+    height: 12px;
+
+    background-color: var(--accent-light);
+
+    border-radius: 2px;
+
+    position: absolute;
+
+    top: 12px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    animation: scroll-wheel 2.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+
+}
+
+
+
+@keyframes scroll-wheel {
+
+    0%, 20% { 
+
+        top: 12px; 
+
+        opacity: 1; 
+
+    }
+
+    80%, 100% { 
+
+        top: 30px; 
+
+        opacity: 0; 
+
+    }
+
+}
+
+
+
+.arrow-down {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+}
+
+
+
+.arrow-down span {
+
+    display: block;
+
+    width: 10px;
+
+    height: 10px;
+
+    border-bottom: 2px solid var(--accent-light);
+
+    border-right: 2px solid var(--accent-light);
+
+    transform: rotate(45deg);
+
+    margin: -5px 0;
+
+    animation: arrow-down 2.5s infinite;
+
+}
+
+
+
+.arrow-down span:nth-child(2) {
+
+    animation-delay: 0.2s;
+
+}
+
+
+
+.arrow-down span:nth-child(3) {
+
+    animation-delay: 0.4s;
+
+}
+
+
+
+@keyframes arrow-down {
+
+    0% {
+
+        opacity: 0;
+
+        transform: rotate(45deg) translate(-5px, -5px);
+
+    }
+
+    50% {
+
+        opacity: 1;
+
+    }
+
+    100% {
+
+        opacity: 0;
+
+        transform: rotate(45deg) translate(5px, 5px);
+
+    }
+
+}
+
+
+
+/* =============================================
+
+   ABOUT SECTION
+
+============================================= */
+
+.about {
+
+    background-color: var(--secondary);
+
+    position: relative;
+
+}
+
+
+
+.about::before {
+
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    background: radial-gradient(circle at 20% 50%, rgba(58, 107, 201, 0.1) 0%, transparent 50%);
+
+    pointer-events: none;
+
+}
+
+
+
+.about-content {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 80px;
+
+    opacity: 0;
+
+    transform: translateY(40px);
+
+    transition: opacity 1s var(--transition-slow) 0.2s, transform 1s var(--transition-slow) 0.2s;
+
+}
+
+
+
+.about-content.visible {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+}
+
+
+
+.about-text {
+
+    flex: 1;
+
+}
+
+
+
+.about-text h3 {
+
+    margin-bottom: 25px;
+
+    color: var(--light);
+
+}
+
+
+
+.about-text p {
+
+    color: var(--text-light);
+
+    margin-bottom: 25px;
+
+    font-size: 1.1rem;
+
+}
+
+
+
+.about-list {
+
+    list-style: none;
+
+    margin-top: 30px;
+
+}
+
+
+
+.about-list li {
+
+    margin-bottom: 15px;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    opacity: 0;
+
+    transform: translateX(-20px);
+
+    transition: opacity 0.6s ease, transform 0.6s ease;
+
+}
+
+
+
+.about-content.visible .about-list li {
+
+    opacity: 1;
+
+    transform: translateX(0);
+
+}
+
+
+
+.about-content.visible .about-list li:nth-child(1) { transition-delay: 0.4s; }
+
+.about-content.visible .about-list li:nth-child(2) { transition-delay: 0.5s; }
+
+.about-content.visible .about-list li:nth-child(3) { transition-delay: 0.6s; }
+
+.about-content.visible .about-list li:nth-child(4) { transition-delay: 0.7s; }
+
+
+
+.about-list i {
+
+    color: var(--accent-light);
+
+    margin-right: 15px;
+
+    font-size: 1.3rem;
+
+    margin-top: 3px;
+
+}
+
+
+
+.about-list span {
+
+    color: var(--text-light);
+
+    font-weight: 300;
+
+}
+
+
+
+.about-image {
+
+    flex: 1;
+
+    position: relative;
+
+}
+
+
+
+.about-img-container {
+
+    position: relative;
+
+    height: 500px;
+
+    width: 100%;
+
+}
+
+
+
+.about-img-card {
+
+    position: absolute;
+
+    width: 320px;
+
+    height: 320px;
+
+    background: linear-gradient(135deg, rgba(58, 107, 201, 0.1), rgba(10, 10, 26, 0.8));
+
+    border-radius: var(--card-radius);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+
+    overflow: hidden;
+
+    backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(255, 255, 255, 0.05);
+
+    transition: var(--transition-medium);
+
+}
+
+
+
+.about-img-card:hover {
+
+    transform: scale(1.05);
+
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+
+}
+
+
+
+.card-1 {
+
+    top: 0;
+
+    right: 0;
+
+    z-index: 3;
+
+}
+
+
+
+.card-2 {
+
+    top: 120px;
+
+    left: 0;
+
+    z-index: 2;
+
+    animation: floating 8s ease-in-out infinite;
+
+}
+
+
+
+.card-3 {
+
+    top: 240px;
+
+    right: 40px;
+
+    z-index: 1;
+
+    animation: floating 10s ease-in-out infinite reverse;
+
+}
+
+
+
+.floating-delayed {
+
+    animation-delay: 1s;
+
+}
+
+
+
+@keyframes floating {
+
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+
+    50% { transform: translateY(-30px) rotate(2deg); }
+
+}
+
+
+
+.img-placeholder {
+
+    font-size: 6rem;
+
+    color: rgba(255, 255, 255, 0.15);
+
+    transition: var(--transition-medium);
+
+}
+
+
+
+.about-img-card:hover .img-placeholder {
+
+    color: rgba(255, 255, 255, 0.25);
+
+    transform: scale(1.1);
+
+}
+
+
+
+.card-glow {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    border-radius: var(--card-radius);
+
+    box-shadow: inset 0 0 50px rgba(90, 141, 238, 0.1);
+
+    pointer-events: none;
+
+}
+
+
+
+/* =============================================
+
+   FEATURES SECTION
+
+============================================= */
+
+.features {
+
+    background-color: var(--primary);
+
+    position: relative;
+
+}
+
+
+
+.features-bg-elements {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    pointer-events: none;
+
+    z-index: 1;
+
+}
+
+
+
+.bg-circle {
+
+    position: absolute;
+
+    border-radius: 50%;
+
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+
+    filter: blur(40px);
+
+    opacity: 0.3;
+
+}
+
+
+
+.circle-1 {
+
+    width: 400px;
+
+    height: 400px;
+
+    top: 10%;
+
+    left: 5%;
+
+}
+
+
+
+.circle-2 {
+
+    width: 300px;
+
+    height: 300px;
+
+    bottom: 15%;
+
+    right: 10%;
+
+}
+
+
+
+.circle-3 {
+
+    width: 200px;
+
+    height: 200px;
+
+    top: 40%;
+
+    right: 20%;
+
+}
+
+
+
+.features-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 40px;
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+
+
+.feature-card {
+
+    background: linear-gradient(135deg, rgba(18, 18, 48, 0.7), rgba(10, 10, 26, 0.9));
+
+    border-radius: var(--card-radius);
+
+    padding: 50px 35px;
+
+    text-align: center;
+
+    transition: var(--transition-medium);
+
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+
+    position: relative;
+
+    overflow: hidden;
+
+    z-index: 1;
+
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    border: 1px solid rgba(255, 255, 255, 0.05);
+
+    backdrop-filter: blur(10px);
+
+    opacity: 0;
+
+    transform: translateY(50px) scale(0.95);
+
+    transition: opacity 0.8s var(--transition-slow), transform 0.8s var(--transition-slow), box-shadow 0.4s ease;
+
+}
+
+
+
+.feature-card.visible {
+
+    opacity: 1;
+
+    transform: translateY(0) scale(1);
+
+}
+
+
+
+.features-grid .feature-card:nth-child(1) { transition-delay: 0.1s; }
+
+.features-grid .feature-card:nth-child(2) { transition-delay: 0.2s; }
+
+.features-grid .feature-card:nth-child(3) { transition-delay: 0.3s; }
+
+.features-grid .feature-card:nth-child(4) { transition-delay: 0.4s; }
+
+.features-grid .feature-card:nth-child(5) { transition-delay: 0.5s; }
+
+.features-grid .feature-card:nth-child(6) { transition-delay: 0.6s; }
+
+
+
+.feature-card::before {
+
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 5px;
+
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+
+    z-index: 2;
+
+    transform: scaleX(0);
+
+    transform-origin: left;
+
+    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+}
+
+
+
+.feature-card:hover::before {
+
+    transform: scaleX(1);
+
+}
+
+
+
+.feature-card:hover {
+
+    transform: translateY(-15px) scale(1.02);
+
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+
+}
+
+
+
+.card-icon {
+
+    margin-bottom: 30px;
+
+}
+
+
+
+.icon-wrapper {
+
+    width: 90px;
+
+    height: 90px;
+
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin: 0 auto;
+
+    font-size: 2.5rem;
+
+    color: var(--light);
+
+    transition: var(--transition-medium);
+
+    position: relative;
+
+    overflow: hidden;
+
+}
+
+
+
+.icon-wrapper::before {
+
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    background: linear-gradient(135deg, var(--accent-light), var(--accent));
+
+    opacity: 0;
+
+    transition: opacity 0.4s ease;
+
+}
+
+
+
+.feature-card:hover .icon-wrapper {
+
+    transform: rotateY(180deg) scale(1.1);
+
+}
+
+
+
+.feature-card:hover .icon-wrapper::before {
+
+    opacity: 1;
+
+}
+
+
+
+.icon-wrapper i {
+
+    position: relative;
+
+    z-index: 1;
+
+}
+
+
+
+.card-title {
+
+    font-size: 1.6rem;
+
+    margin-bottom: 20px;
+
+    color: var(--light);
+
+}
+
+
+
+.card-text {
+
+    color: var(--text-light);
+
+    margin-bottom: 25px;
+
+    flex-grow: 1;
+
+    font-weight: 300;
+
+}
+
+
+
+.card-hover {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    background: linear-gradient(135deg, rgba(58, 107, 201, 0.95), rgba(10, 10, 26, 0.95));
+
+    padding: 50px 35px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    opacity: 0;
+
+    transition: var(--transition-medium);
+
+    transform: translateY(20px) scale(0.95);
+
+    border-radius: var(--card-radius);
+
+}
+
+
+
+.feature-card:hover .card-hover {
+
+    opacity: 1;
+
+    transform: translateY(0) scale(1);
+
+}
+
+
+
+.card-hover p {
+
+    color: var(--text-light);
+
+    margin-bottom: 25px;
+
+    text-align: center;
+
+}
+
+
+
+.card-link {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    color: var(--accent-light);
+
+    font-weight: 600;
+
+    margin-top: 10px;
+
+}
+
+
+
+.card-link i {
+
+    margin-left: 8px;
+
+    transition: transform 0.3s ease;
+
+}
+
+
+
+.card-link:hover i {
+
+    transform: translateX(5px);
+
+}
+
+
+
+.feature-card .card-glow {
+
+    box-shadow: inset 0 0 80px rgba(90, 141, 238, 0.05);
+
+}
+
+
+
+/* =============================================
+
+   FOOTER
+
+============================================= */
+
+.footer {
+
+    background-color: var(--secondary);
+
+    padding-top: 100px;
+
+    position: relative;
+
+    overflow: hidden;
+
+}
+
+
+
+.footer::before {
+
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 5px;
+
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+
+}
+
+
+
+.footer-content {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 60px;
+
+    margin-bottom: 80px;
+
+    opacity: 0;
+
+    transform: translateY(40px);
+
+    transition: opacity 1s var(--transition-slow), transform 1s var(--transition-slow);
+
+}
+
+
+
+.footer-content.visible {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+}
+
+
+
+.footer-col {
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+
+
+.footer-title {
+
+    font-size: 1.8rem;
+
+    margin-bottom: 30px;
+
+    color: var(--light);
+
+}
+
+
+
+.footer-title span {
+
+    color: var(--accent-light);
+
+}
+
+
+
+.footer-text {
+
+    color: var(--text-light);
+
+    margin-bottom: 30px;
+
+    font-weight: 300;
+
+}
+
+
+
+.social-links {
+
+    display: flex;
+
+    gap: 15px;
+
+}
+
+
+
+.social-link {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 45px;
+
+    height: 45px;
+
+    background-color: rgba(255, 255, 255, 0.05);
+
+    border-radius: 50%;
+
+    transition: var(--transition-medium);
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+}
+
+
+
+.social-link:hover {
+
+    background-color: var(--accent);
+
+    transform: translateY(-5px) rotate(10deg);
+
+    border-color: var(--accent);
+
+}
+
+
+
+.footer-links {
+
+    list-style: none;
+
+}
+
+
+
+.footer-links li {
+
+    margin-bottom: 15px;
+
+    opacity: 0;
+
+    transform: translateX(-20px);
+
+    transition: opacity 0.5s ease, transform 0.5s ease;
+
+}
+
+
+
+.footer-content.visible .footer-links li {
+
+    opacity: 1;
+
+    transform: translateX(0);
+
+}
+
+
+
+.footer-content.visible .footer-links li:nth-child(1) { transition-delay: 0.3s; }
+
+.footer-content.visible .footer-links li:nth-child(2) { transition-delay: 0.4s; }
+
+.footer-content.visible .footer-links li:nth-child(3) { transition-delay: 0.5s; }
+
+.footer-content.visible .footer-links li:nth-child(4) { transition-delay: 0.6s; }
+
+
+
+.footer-links a {
+
+    display: flex;
+
+    align-items: center;
+
+    color: var(--text-light);
+
+    transition: var(--transition-fast);
+
+}
+
+
+
+.footer-links a:hover {
+
+    color: var(--accent-light);
+
+    padding-left: 10px;
+
+}
+
+
+
+.footer-links i {
+
+    margin-right: 10px;
+
+    font-size: 0.8rem;
+
+    color: var(--accent-light);
+
+}
+
+
+
+.contact-info {
+
+    list-style: none;
+
+}
+
+
+
+.contact-info li {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    margin-bottom: 20px;
+
+    opacity: 0;
+
+    transform: translateX(-20px);
+
+    transition: opacity 0.5s ease, transform 0.5s ease;
+
+}
+
+
+
+.footer-content.visible .contact-info li {
+
+    opacity: 1;
+
+    transform: translateX(0);
+
+}
+
+
+
+.footer-content.visible .contact-info li:nth-child(1) { transition-delay: 0.3s; }
+
+.footer-content.visible .contact-info li:nth-child(2) { transition-delay: 0.4s; }
+
+.footer-content.visible .contact-info li:nth-child(3) { transition-delay: 0.5s; }
+
+
+
+.contact-info i {
+
+    color: var(--accent-light);
+
+    margin-right: 15px;
+
+    margin-top: 5px;
+
+    font-size: 1.2rem;
+
+}
+
+
+
+.contact-info span {
+
+    color: var(--text-light);
+
+    font-weight: 300;
+
+}
+
+
+
+.footer-bottom {
+
+    padding: 40px 0;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+    text-align: center;
+
+    color: var(--text-light);
+
+    font-size: 0.95rem;
+
+    opacity: 0;
+
+    transform: translateY(20px);
+
+    transition: opacity 0.8s var(--transition-slow) 0.5s, transform 0.8s var(--transition-slow) 0.5s;
+
+}
+
+
+
+.footer-bottom.visible {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+}
+
+
+
+.footer-bottom i {
+
+    color: #ff4757;
+
+    margin: 0 5px;
+
+    animation: heartbeat 1.5s ease-in-out infinite;
+
+}
+
+
+
+@keyframes heartbeat {
+
+    0%, 100% { transform: scale(1); }
+
+    50% { transform: scale(1.1); }
+
+}
+
+
+
+/* =============================================
+
+   BACK TO TOP BUTTON
+
+============================================= */
+
+.back-to-top {
+
+    position: fixed;
+
+    bottom: 40px;
+
+    right: 40px;
+
+    width: 60px;
+
+    height: 60px;
+
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+
+    color: var(--light);
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 1.4rem;
+
+    cursor: pointer;
+
+    transition: var(--transition-medium);
+
+    border: none;
+
+    box-shadow: 0 10px 30px rgba(58, 107, 201, 0.4);
+
+    z-index: var(--z-back-to-top);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform: translateY(30px) scale(0.8);
+
+}
+
+
+
+.back-to-top.visible {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transform: translateY(0) scale(1);
+
+}
+
+
+
+.back-to-top:hover {
+
+    transform: translateY(-5px) scale(1.1);
+
+    box-shadow: 0 15px 40px rgba(58, 107, 201, 0.6);
+
+}
+
+
+
+.back-to-top-wave {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    border-radius: 50%;
+
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+
+    z-index: -1;
+
+    animation: wave 2s ease-out infinite;
+
+}
+
+
+
+@keyframes wave {
+
+    0% {
+
+        transform: scale(1);
+
+        opacity: 1;
+
+    }
+
+    100% {
+
+        transform: scale(1.5);
+
+        opacity: 0;
+
+    }
+
+}
+
+
+
+/* =============================================
+
+   TEXT SPLITTING ANIMATION
+
+============================================= */
+
+.char {
+
+    display: inline-block;
+
+    opacity: 0;
+
+    transform: translateY(30px);
+
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+}
+
+
+
+.splitting.animated .char {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+}
+
+
+
+/* =============================================
+
+   MEDIA QUERIES
+
+============================================= */
+
+
+
+/* Tablet (max-width: 992px) */
+
+@media (max-width: 992px) {
+
+    h1 {
+
+        font-size: 3.2rem;
+
+    }
+
+    
+
+    h2 {
+
+        font-size: 2.5rem;
+
+    }
+
+    
+
+    .hero-title {
+
+        font-size: 3.5rem;
+
+    }
+
+    
+
+    .features-grid {
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 30px;
+
+    }
+
+    
+
+    .about-content {
+
+        flex-direction: column;
+
+        gap: 60px;
+
+    }
+
+    
+
+    .about-img-container {
+
+        height: 450px;
+
+        width: 100%;
+
+        max-width: 600px;
+
+        margin: 0 auto;
+
+    }
+
+    
+
+    .about-img-card {
+
+        width: 280px;
+
+        height: 280px;
+
+    }
+
+    
+
+    .card-1 {
+
+        top: 0;
+
+        right: 20px;
+
+    }
+
+    
+
+    .card-2 {
+
+        top: 100px;
+
+        left: 0;
+
+    }
+
+    
+
+    .card-3 {
+
+        top: 200px;
+
+        right: 0;
+
+    }
+
+    
+
+    .footer-content {
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 50px;
+
+    }
+
+    
+
+    .back-to-top {
+
+        width: 55px;
+
+        height: 55px;
+
+        bottom: 30px;
+
+        right: 30px;
+
+    }
+
+}
+
+
+
+/* Mobile Landscape (max-width: 768px) */
+
+@media (max-width: 768px) {
+
+    .navbar {
+
+        padding: 20px 0;
+
+    }
+
+    
+
+    .hamburger {
+
+        display: flex;
+
+    }
+
+    
+
+    .nav-menu {
+
+        position: fixed;
+
+        top: 0;
+
+        right: -100%;
+
+        flex-direction: column;
+
+        background: linear-gradient(135deg, rgba(10, 10, 26, 0.98), rgba(18, 18, 48, 0.98));
+
+        backdrop-filter: blur(20px);
+
+        width: 80%;
+
+        max-width: 400px;
+
+        height: 100vh;
+
+        padding: 100px 40px 40px;
+
+        transition: right 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+        box-shadow: -10px 0 40px rgba(0, 0, 0, 0.3);
+
+        z-index: var(--z-nav);
+
+        border-left: 1px solid rgba(255, 255, 255, 0.05);
+
+    }
+
+    
+
+    .nav-menu.active {
+
+        right: 0;
+
+    }
+
+    
+
+    .nav-link {
+
+        margin: 0 0 25px 0;
+
+        font-size: 1.3rem;
+
+        padding: 12px 0;
+
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+    }
+
+    
+
+    .nav-link::before {
+
+        display: none;
+
+    }
+
+    
+
+    .hamburger.active .bar:nth-child(1) {
+
+        transform: rotate(45deg) translate(6px, 6px);
+
+    }
+
+    
+
+    .hamburger.active .bar:nth-child(2) {
+
+        opacity: 0;
+
+    }
+
+    
+
+    .hamburger.active .bar:nth-child(3) {
+
+        transform: rotate(-45deg) translate(7px, -7px);
+
+    }
+
+    
+
+    .hero-title {
+
+        font-size: 2.8rem;
+
+    }
+
+    
+
+    .hero-subtitle {
+
+        font-size: 1.2rem;
+
+    }
+
+    
+
+    .hero-buttons {
+
+        flex-direction: column;
+
+        align-items: center;
+
+    }
+
+    
+
+    .btn-hero {
+
+        margin: 10px 0;
+
+        width: 100%;
+
+        max-width: 300px;
+
+    }
+
+    
+
+    .section {
+
+        padding: 80px 0;
+
+    }
+
+    
+
+    .section-title {
+
+        font-size: 2.2rem;
+
+    }
+
+    
+
+    .features-grid {
+
+        grid-template-columns: 1fr;
+
+        gap: 30px;
+
+    }
+
+    
+
+    .feature-card {
+
+        padding: 40px 25px;
+
+    }
+
+    
+
+    .footer-content {
+
+        grid-template-columns: 1fr;
+
+        gap: 50px;
+
+    }
+
+    
+
+    /* Kurangi intensitas parallax di mobile */
+
+    .parallax-layer[data-parallax="true"] {
+
+        /* Nonaktifkan efek parallax scroll di mobile untuk performa */
+
+        transform: translate3d(0, 0, 0) !important;
+
+        transition: transform 0.1s ease !important;
+
+    }
+
+    
+
+    /* Efek mouse parallax dinonaktifkan di mobile */
+
+    body {
+
+        cursor: default !important;
+
+    }
+
+    
+
+    /* Optimasi performa untuk mobile */
+
+    .parallax-layer {
+
+        will-change: auto;
+
+    }
+
+    
+
+    /* Kurangi animasi untuk hemat baterai mobile */
+
+    @media (prefers-reduced-motion: reduce) {
+
+        * {
+
+            animation-duration: 0.01ms !important;
+
+            animation-iteration-count: 1 !important;
+
+            transition-duration: 0.01ms !important;
+
+        }
+
+    }
+
+}
+
+
+
+/* Mobile Portrait (max-width: 480px) */
+
+@media (max-width: 480px) {
+
+    h1 {
+
+        font-size: 2.5rem;
+
+    }
+
+    
+
+    h2 {
+
+        font-size: 2rem;
+
+    }
+
+    
+
+    h3 {
+
+        font-size: 1.6rem;
+
+    }
+
+    
+
+    .hero-title {
+
+        font-size: 2.2rem;
+
+    }
+
+    
+
+    .hero-subtitle {
+
+        font-size: 1rem;
+
+    }
+
+    
+
+    .section-title {
+
+        font-size: 1.8rem;
+
+    }
+
+    
+
+    .section-subtitle {
+
+        font-size: 1.1rem;
+
+    }
+
+    
+
+    .btn-primary, .btn-secondary {
+
+        padding: 16px 30px;
+
+        font-size: 1rem;
+
+    }
+
+    
+
+    .about-img-container {
+
+        height: 350px;
+
+    }
+
+    
+
+    .about-img-card {
+
+        width: 220px;
+
+        height: 220px;
+
+    }
+
+    
+
+    .card-1 {
+
+        right: 10px;
+
+    }
+
+    
+
+    .card-2 {
+
+        top: 80px;
+
+    }
+
+    
+
+    .card-3 {
+
+        top: 160px;
+
+        right: 10px;
+
+    }
+
+    
+
+    .icon-wrapper {
+
+        width: 70px;
+
+        height: 70px;
+
+        font-size: 2rem;
+
+    }
+
+    
+
+    .back-to-top {
+
+        width: 50px;
+
+        height: 50px;
+
+        bottom: 20px;
+
+        right: 20px;
+
+        font-size: 1.2rem;
+
+    }
+
+}
+
+</style>
+
+<body>
+
+    <!-- Preloader untuk animasi masuk yang lebih smooth -->
+
+    <div class="preloader">
+
+        <div class="preloader-inner">
+
+            <div class="preloader-circle"></div>
+
+            <div class="preloader-text">Memuat Pengalaman Parallax...</div>
+
+        </div>
+
+    </div>
+
+    
+
+    <!-- Navigation -->
+
+    <nav id="navbar" class="navbar">
+
+        <div class="container">
+
+            <a href="#home" class="logo">Parallax<span>Web</span></a>
+
+            
+
+            <ul class="nav-menu">
+
+                <li><a href="#home" class="nav-link">Beranda</a></li>
+
+                <li><a href="#about" class="nav-link">Tentang</a></li>
+
+                <li><a href="#features" class="nav-link">Fitur</a></li>
+
+                <li><a href="#contact" class="nav-link">Kontak</a></li>
+
+            </ul>
+
+            
+
+            <div class="hamburger">
+
+                <span class="bar"></span>
+
+                <span class="bar"></span>
+
+                <span class="bar"></span>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- Hero Section dengan Parallax Multi-Layer -->
+
+    <section id="home" class="hero">
+
+        <!-- Parallax Layer 1: Background (gerak paling lambat) -->
+
+        <div class="parallax-layer layer-bg" data-speed="0.15" data-parallax="true">
+
+            <div class="parallax-content"></div>
+
+        </div>
+
+        
+
+        <!-- Parallax Layer 2: Midground (gerak sedang) -->
+
+        <div class="parallax-layer layer-mid" data-speed="0.35" data-parallax="true">
+
+            <div class="parallax-content"></div>
+
+        </div>
+
+        
+
+        <!-- Parallax Layer 3: Foreground (gerak paling cepat) -->
+
+        <div class="parallax-layer layer-fore" data-speed="0.7" data-parallax="true">
+
+            <div class="parallax-content"></div>
+
+        </div>
+
+        
+
+        <!-- Particle Effects -->
+
+        <div class="particles" id="particles"></div>
+
+        
+
+        <!-- Overlay gradient untuk meningkatkan keterbacaan teks -->
+
+        <div class="overlay">
+
+            <div class="gradient-overlay"></div>
+
+        </div>
+
+        
+
+        <!-- Konten Hero -->
+
+        <div class="container">
+
+            <div class="hero-content">
+
+                <div class="hero-text-wrapper">
+
+                    <h1 class="hero-title" data-splitting>Pengalaman Parallax Modern</h1>
+
+                    <p class="hero-subtitle">Website single-page dengan efek parallax multi-layer yang halus dan responsif</p>
+
+                    <div class="hero-buttons">
+
+                        <a href="#about" class="btn-primary btn-hero">
+
+                            <span class="btn-text">Jelajahi Lebih Lanjut</span>
+
+                            <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
+
+                        </a>
+
+                        <a href="#features" class="btn-secondary btn-hero">
+
+                            <span class="btn-text">Lihat Fitur</span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        
+
+        <!-- Scroll indicator dengan animasi yang lebih smooth -->
+
+        <div class="scroll-indicator">
+
+            <div class="mouse">
+
+                <div class="wheel"></div>
+
+            </div>
+
+            <div class="arrow-down">
+
+                <span></span>
+
+                <span></span>
+
+                <span></span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- About Section -->
+
+    <section id="about" class="section about">
+
+        <div class="container">
+
+            <div class="section-header">
+
+                <h2 class="section-title" data-splitting>Tentang Kami</h2>
+
+                <p class="section-subtitle">Mengembangkan pengalaman web yang imersif dengan teknologi terbaru</p>
+
+            </div>
+
+            
+
+            <div class="about-content">
+
+                <div class="about-text">
+
+                    <h3>Membawa Website ke Level Baru</h3>
+
+                    <p>Kami menghadirkan pengalaman parallax multi-layer yang memukau dengan performa tinggi. Setiap layer bergerak dengan kecepatan berbeda untuk menciptakan efek kedalaman yang memukau.</p>
+
+                    <p>Teknik yang kami gunakan dioptimalkan untuk performa maksimal, dengan hardware acceleration dan fallback yang tepat untuk semua perangkat.</p>
+
+                    <ul class="about-list">
+
+                        <li><i class="fas fa-check-circle"></i> <span>Efek parallax smooth 60fps</span></li>
+
+                        <li><i class="fas fa-check-circle"></i> <span>Responsif di semua ukuran layar</span></li>
+
+                        <li><i class="fas fa-check-circle"></i> <span>Optimasi performa untuk mobile</span></li>
+
+                        <li><i class="fas fa-check-circle"></i> <span>Animasi yang halus dan natural</span></li>
+
+                    </ul>
+
+                </div>
+
+                
+
+                <div class="about-image">
+
+                    <div class="about-img-container">
+
+                        <div class="about-img-card card-1">
+
+                            <div class="img-placeholder">
+
+                                <i class="fas fa-layer-group"></i>
+
+                            </div>
+
+                            <div class="card-glow"></div>
+
+                        </div>
+
+                        <div class="about-img-card card-2 floating">
+
+                            <div class="img-placeholder">
+
+                                <i class="fas fa-desktop"></i>
+
+                            </div>
+
+                            <div class="card-glow"></div>
+
+                        </div>
+
+                        <div class="about-img-card card-3 floating-delayed">
+
+                            <div class="img-placeholder">
+
+                                <i class="fas fa-magic"></i>
+
+                            </div>
+
+                            <div class="card-glow"></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Features Section -->
+
+    <section id="features" class="section features">
+
+        <div class="container">
+
+            <div class="section-header">
+
+                <h2 class="section-title" data-splitting>Fitur Unggulan</h2>
+
+                <p class="section-subtitle">Teknologi modern untuk pengalaman pengguna terbaik</p>
+
+            </div>
+
+            
+
+            <div class="features-grid">
+
+                <!-- Card 1 -->
+
+                <div class="feature-card">
+
+                    <div class="card-icon">
+
+                        <div class="icon-wrapper">
+
+                            <i class="fas fa-mountain"></i>
+
+                        </div>
+
+                    </div>
+
+                    <h3 class="card-title">Parallax Multi-Layer</h3>
+
+                    <p class="card-text">Tiga lapis parallax dengan kecepatan berbeda menciptakan efek kedalaman yang realistis dan menarik.</p>
+
+                    <div class="card-hover">
+
+                        <p>Efek yang dioptimalkan dengan requestAnimationFrame untuk performa maksimal.</p>
+
+                        <a href="#home" class="card-link">Lihat Demo <i class="fas fa-arrow-right"></i></a>
+
+                    </div>
+
+                    <div class="card-glow"></div>
+
+                </div>
+
+                
+
+                <!-- Card 2 -->
+
+                <div class="feature-card">
+
+                    <div class="card-icon">
+
+                        <div class="icon-wrapper">
+
+                            <i class="fas fa-mobile-alt"></i>
+
+                        </div>
+
+                    </div>
+
+                    <h3 class="card-title">Responsif Penuh</h3>
+
+                    <p class="card-text">Tampilan sempurna di semua perangkat, dengan adaptasi khusus untuk mobile dan tablet.</p>
+
+                    <div class="card-hover">
+
+                        <p>Layout berubah secara dinamis untuk ukuran layar berbeda dengan media queries optimal.</p>
+
+                        <a href="#home" class="card-link">Lihat Demo <i class="fas fa-arrow-right"></i></a>
+
+                    </div>
+
+                    <div class="card-glow"></div>
+
+                </div>
+
+                
+
+                <!-- Card 3 -->
+
+                <div class="feature-card">
+
+                    <div class="card-icon">
+
+                        <div class="icon-wrapper">
+
+                            <i class="fas fa-tachometer-alt"></i>
+
+                        </div>
+
+                    </div>
+
+                    <h3 class="card-title">Performa Tinggi</h3>
+
+                    <p class="card-text">Optimasi GPU acceleration, debounce scroll, dan teknik modern untuk performa terbaik.</p>
+
+                    <div class="card-hover">
+
+                        <p>Menggunakan translate3d dan will-change untuk memanfaatkan hardware acceleration.</p>
+
+                        <a href="#home" class="card-link">Lihat Demo <i class="fas fa-arrow-right"></i></a>
+
+                    </div>
+
+                    <div class="card-glow"></div>
+
+                </div>
+
+                
+
+                <!-- Card 4 -->
+
+                <div class="feature-card">
+
+                    <div class="card-icon">
+
+                        <div class="icon-wrapper">
+
+                            <i class="fas fa-mouse-pointer"></i>
+
+                        </div>
+
+                    </div>
+
+                    <h3 class="card-title">Mouse Parallax</h3>
+
+                    <p class="card-text">Efek tambahan dimana layer bergerak mengikuti gerakan mouse di perangkat desktop.</p>
+
+                    <div class="card-hover">
+
+                        <p>Efek mouse-move parallax yang smooth hanya diaktifkan untuk perangkat desktop.</p>
+
+                        <a href="#home" class="card-link">Lihat Demo <i class="fas fa-arrow-right"></i></a>
+
+                    </div>
+
+                    <div class="card-glow"></div>
+
+                </div>
+
+                
+
+                <!-- Card 5 -->
+
+                <div class="feature-card">
+
+                    <div class="card-icon">
+
+                        <div class="icon-wrapper">
+
+                            <i class="fas fa-eye"></i>
+
+                        </div>
+
+                    </div>
+
+                    <h3 class="card-title">Animasi Halus</h3>
+
+                    <p class="card-text">Fade-in, fade-up, dan hover effects yang memberikan pengalaman interaktif yang menyenangkan.</p>
+
+                    <div class="card-hover">
+
+                        <p>Animasi dipicu oleh IntersectionObserver untuk tampil saat elemen masuk viewport.</p>
+
+                        <a href="#home" class="card-link">Lihat Demo <i class="fas fa-arrow-right"></i></a>
+
+                    </div>
+
+                    <div class="card-glow"></div>
+
+                </div>
+
+                
+
+                <!-- Card 6 -->
+
+                <div class="feature-card">
+
+                    <div class="card-icon">
+
+                        <div class="icon-wrapper">
+
+                            <i class="fas fa-palette"></i>
+
+                        </div>
+
+                    </div>
+
+                    <h3 class="card-title">Desain Modern</h3>
+
+                    <p class="card-text">Menggunakan CSS variables, font yang elegan, dan palet warna yang konsisten.</p>
+
+                    <div class="card-hover">
+
+                        <p>Desain dengan font Poppins dan Montserrat serta sistem warna yang terdefinisi dengan baik.</p>
+
+                        <a href="#home" class="card-link">Lihat Demo <i class="fas fa-arrow-right"></i></a>
+
+                    </div>
+
+                    <div class="card-glow"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        
+
+        <!-- Background elements untuk features section -->
+
+        <div class="features-bg-elements">
+
+            <div class="bg-circle circle-1"></div>
+
+            <div class="bg-circle circle-2"></div>
+
+            <div class="bg-circle circle-3"></div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Footer -->
+
+    <footer id="contact" class="footer">
+
+        <div class="container">
+
+            <div class="footer-content">
+
+                <!-- Kolom 1 -->
+
+                <div class="footer-col">
+
+                    <h3 class="footer-title">Parallax<span>Web</span></h3>
+
+                    <p class="footer-text">Membangun website dengan efek parallax modern yang performanya dioptimalkan untuk pengalaman pengguna terbaik.</p>
+
+                    <div class="social-links">
+
+                        <a href="#" aria-label="Facebook" class="social-link"><i class="fab fa-facebook-f"></i></a>
+
+                        <a href="#" aria-label="Twitter" class="social-link"><i class="fab fa-twitter"></i></a>
+
+                        <a href="#" aria-label="Instagram" class="social-link"><i class="fab fa-instagram"></i></a>
+
+                        <a href="#" aria-label="LinkedIn" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+
+                        <a href="#" aria-label="GitHub" class="social-link"><i class="fab fa-github"></i></a>
+
+                    </div>
+
+                </div>
+
+                
+
+                <!-- Kolom 2 -->
+
+                <div class="footer-col">
+
+                    <h3 class="footer-title">Navigasi Cepat</h3>
+
+                    <ul class="footer-links">
+
+                        <li><a href="#home"><i class="fas fa-chevron-right"></i> Beranda</a></li>
+
+                        <li><a href="#about"><i class="fas fa-chevron-right"></i> Tentang</a></li>
+
+                        <li><a href="#features"><i class="fas fa-chevron-right"></i> Fitur</a></li>
+
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Kontak</a></li>
+
+                    </ul>
+
+                </div>
+
+                
+
+                <!-- Kolom 3 -->
+
+                <div class="footer-col">
+
+                    <h3 class="footer-title">Kontak Kami</h3>
+
+                    <ul class="contact-info">
+
+                        <li><i class="fas fa-map-marker-alt"></i> <span>Jl. Teknologi Modern No. 123, Jakarta</span></li>
+
+                        <li><i class="fas fa-envelope"></i> <span>info@parallaxweb.id</span></li>
+
+                        <li><i class="fas fa-phone"></i> <span>+62 21 1234 5678</span></li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+            
+
+            <div class="footer-bottom">
+
+                <p>&copy; <span id="current-year"></span> ParallaxWeb. Semua hak dilindungi. Dibuat dengan <i class="fas fa-heart"></i> untuk web modern.</p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- Back to Top Button -->
+
+    <button id="backToTop" class="back-to-top" aria-label="Kembali ke atas">
+
+        <i class="fas fa-chevron-up"></i>
+
+        <div class="back-to-top-wave"></div>
+
+    </button>
+
+
+
+    <script>
+
+        // =============================================
+
+// MAIN WEBSITE FUNCTIONALITY - ANIMASI LEBIH HALUS
+
+// =============================================
+
+
+
+// Inisialisasi variabel global
+
+let scrollPosition = 0;
+
+let isMobile = window.innerWidth < 768;
+
+let ticking = false;
+
+let mouseX = 0;
+
+let mouseY = 0;
+
+let time = 0;
+
+let isPreloaderVisible = true;
+
+
+
+// DOM Elements
+
+const preloader = document.querySelector('.preloader');
+
+const navbar = document.getElementById('navbar');
+
+const backToTopBtn = document.getElementById('backToTop');
+
+const hamburger = document.querySelector('.hamburger');
+
+const navMenu = document.querySelector('.nav-menu');
+
+const navLinks = document.querySelectorAll('.nav-link');
+
+const parallaxLayers = document.querySelectorAll('.parallax-layer[data-parallax="true"]');
+
+const currentYear = document.getElementById('current-year');
+
+const heroContent = document.querySelector('.hero-content');
+
+const sectionHeaders = document.querySelectorAll('.section-header');
+
+const aboutContent = document.querySelector('.about-content');
+
+const featureCards = document.querySelectorAll('.feature-card');
+
+const footerContent = document.querySelector('.footer-content');
+
+const footerBottom = document.querySelector('.footer-bottom');
+
+const particlesContainer = document.getElementById('particles');
+
+
+
+// =============================================
+
+// PERFORMANCE OPTIMIZATION FUNCTIONS
+
+// =============================================
+
+
+
+/**
+
+ * Debounce function yang lebih smooth untuk performa tinggi
+
+ */
+
+function smoothDebounce(func, wait = 16, immediate = false) {
+
+    let timeout;
+
+    return function() {
+
+        const context = this, args = arguments;
+
+        const later = function() {
+
+            timeout = null;
+
+            if (!immediate) func.apply(context, args);
+
+        };
+
+        const callNow = immediate && !timeout;
+
+        clearTimeout(timeout);
+
+        timeout = setTimeout(later, wait);
+
+        if (callNow) func.apply(context, args);
+
+    };
+
+}
+
+
+
+/**
+
+ * Throttle dengan requestAnimationFrame untuk animasi yang paling smooth
+
+ */
+
+function rafThrottle(callback) {
+
+    let requestId = null;
+
+    let lastArgs;
+
+    
+
+    const throttled = function(...args) {
+
+        lastArgs = args;
+
+        if (requestId === null) {
+
+            requestId = requestAnimationFrame(() => {
+
+                callback.apply(this, lastArgs);
+
+                requestId = null;
+
+            });
+
+        }
+
+    };
+
+    
+
+    throttled.cancel = () => {
+
+        if (requestId !== null) {
+
+            cancelAnimationFrame(requestId);
+
+            requestId = null;
+
+        }
+
+    };
+
+    
+
+    return throttled;
+
+}
+
+
+
+/**
+
+ * Memeriksa apakah elemen berada dalam viewport dengan threshold
+
+ */
+
+function isInViewport(element, threshold = 0.15) {
+
+    const rect = element.getBoundingClientRect();
+
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+
+    const thresholdHeight = windowHeight * threshold;
+
+    
+
+    return (
+
+        rect.top <= windowHeight - thresholdHeight &&
+
+        rect.bottom >= thresholdHeight
+
+    );
+
+}
+
+
+
+/**
+
+ * Memeriksa apakah perangkat adalah mobile
+
+ */
+
+function checkIfMobile() {
+
+    isMobile = window.innerWidth < 768;
+
+    
+
+    // Optimasi untuk mobile: nonaktifkan efek yang berat
+
+    if (isMobile) {
+
+        document.removeEventListener('mousemove', handleMouseMove);
+
+        // Kurangi jumlah partikel
+
+        if (particlesContainer) {
+
+            particlesContainer.style.display = 'none';
+
+        }
+
+    } else {
+
+        document.addEventListener('mousemove', handleMouseMove);
+
+        if (particlesContainer) {
+
+            particlesContainer.style.display = 'block';
+
+            createParticles();
+
+        }
+
+    }
+
+    
+
+    // Reset posisi parallax layers ketika ukuran layar berubah
+
+    window.requestAnimationFrame(updateParallax);
+
+}
+
+
+
+// =============================================
+
+// PRELOADER & INITIAL ANIMATIONS
+
+// =============================================
+
+
+
+/**
+
+ * Handle preloader animation
+
+ */
+
+function handlePreloader() {
+
+    // Simulasi loading time
+
+    setTimeout(() => {
+
+        preloader.classList.add('loaded');
+
+        isPreloaderVisible = false;
+
+        document.body.style.overflow = 'auto';
+
+        
+
+        // Trigger initial animations setelah preloader selesai
+
+        setTimeout(() => {
+
+            if (isInViewport(heroContent)) {
+
+                heroContent.classList.add('visible');
+
+            }
+
+            
+
+            // Animate navbar masuk
+
+            navbar.style.opacity = '1';
+
+            navbar.style.transform = 'translateY(0)';
+
+        }, 300);
+
+    }, 1800);
+
+}
+
+
+
+/**
+
+ * Text splitting animation untuk efek huruf per huruf
+
+ */
+
+function setupTextSplitting() {
+
+    const elements = document.querySelectorAll('[data-splitting]');
+
+    
+
+    elements.forEach(element => {
+
+        const text = element.textContent;
+
+        element.innerHTML = '';
+
+        
+
+        // Split text into characters
+
+        for (let i = 0; i < text.length; i++) {
+
+            const char = document.createElement('span');
+
+            char.className = 'char';
+
+            char.textContent = text[i] === ' ' ? '\u00A0' : text[i];
+
+            char.style.transitionDelay = `${i * 0.03}s`;
+
+            element.appendChild(char);
+
+        }
+
+        
+
+        // Add class for animation
+
+        element.classList.add('splitting');
+
+        
+
+        // Animate when in viewport
+
+        const observer = new IntersectionObserver((entries) => {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+
+                    setTimeout(() => {
+
+                        entry.target.classList.add('animated');
+
+                    }, 300);
+
+                    observer.unobserve(entry.target);
+
+                }
+
+            });
+
+        }, { threshold: 0.5 });
+
+        
+
+        observer.observe(element);
+
+    });
+
+}
+
+
+
+// =============================================
+
+// NAVIGATION FUNCTIONS
+
+// =============================================
+
+
+
+/**
+
+ * Mengatur navbar dengan animasi yang lebih smooth
+
+ */
+
+function handleNavbarOnScroll() {
+
+    scrollPosition = window.scrollY;
+
+    
+
+    // Smooth transition untuk navbar background
+
+    if (scrollPosition > 100) {
+
+        navbar.classList.add('scrolled');
+
+    } else {
+
+        navbar.classList.remove('scrolled');
+
+    }
+
+    
+
+    // Update active nav link dengan animasi
+
+    updateActiveNavLink();
+
+}
+
+
+
+/**
+
+ * Update active navigation link dengan transition yang smooth
+
+ */
+
+function updateActiveNavLink() {
+
+    const sections = document.querySelectorAll('section[id]');
+
+    let currentSection = '';
+
+    
+
+    sections.forEach(section => {
+
+        const sectionTop = section.offsetTop - 120;
+
+        const sectionHeight = section.clientHeight;
+
+        
+
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+
+            currentSection = section.getAttribute('id');
+
+        }
+
+    });
+
+    
+
+    navLinks.forEach(link => {
+
+        link.classList.remove('active');
+
+        if (link.getAttribute('href') === `#${currentSection}`) {
+
+            link.classList.add('active');
+
+        }
+
+    });
+
+}
+
+
+
+/**
+
+ * Toggle hamburger menu dengan animasi smooth
+
+ */
+
+function toggleHamburgerMenu() {
+
+    hamburger.classList.toggle('active');
+
+    navMenu.classList.toggle('active');
+
+    
+
+    // Smooth transition untuk body scroll
+
+    if (navMenu.classList.contains('active')) {
+
+        document.body.style.overflow = 'hidden';
+
+        document.body.style.paddingRight = `${getScrollbarWidth()}px`;
+
+        navbar.style.paddingRight = `${getScrollbarWidth()}px`;
+
+    } else {
+
+        document.body.style.overflow = 'auto';
+
+        document.body.style.paddingRight = '0';
+
+        navbar.style.paddingRight = '0';
+
+    }
+
+}
+
+
+
+/**
+
+ * Mendapatkan lebar scrollbar untuk menghindari layout shift
+
+ */
+
+function getScrollbarWidth() {
+
+    return window.innerWidth - document.documentElement.clientWidth;
+
+}
+
+
+
+/**
+
+ * Smooth scroll dengan easing function
+
+ */
+
+function smoothScroll(e) {
+
+    e.preventDefault();
+
+    
+
+    const targetId = this.getAttribute('href');
+
+    if (!targetId || targetId === '#') return;
+
+    
+
+    const targetElement = document.querySelector(targetId);
+
+    if (!targetElement) return;
+
+    
+
+    // Tutup menu hamburger jika terbuka
+
+    if (navMenu.classList.contains('active')) {
+
+        toggleHamburgerMenu();
+
+    }
+
+    
+
+    // Hitung posisi target dengan offset navbar
+
+    const navbarHeight = navbar.offsetHeight;
+
+    const targetPosition = targetElement.offsetTop - navbarHeight;
+
+    const startPosition = window.pageYOffset;
+
+    const distance = targetPosition - startPosition;
+
+    const duration = 1000; // ms
+
+    let startTime = null;
+
+    
+
+    // Easing function (easeInOutCubic)
+
+    function easeInOutCubic(t) {
+
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+    }
+
+    
+
+    function animation(currentTime) {
+
+        if (startTime === null) startTime = currentTime;
+
+        const timeElapsed = currentTime - startTime;
+
+        const progress = Math.min(timeElapsed / duration, 1);
+
+        const easeProgress = easeInOutCubic(progress);
+
+        
+
+        window.scrollTo(0, startPosition + distance * easeProgress);
+
+        
+
+        if (timeElapsed < duration) {
+
+            requestAnimationFrame(animation);
+
+        }
+
+    }
+
+    
+
+    requestAnimationFrame(animation);
+
+}
+
+
+
+// =============================================
+
+// PARALLAX FUNCTIONS - SMOOTHER VERSION
+
+// =============================================
+
+
+
+/**
+
+ * Update posisi layer parallax dengan easing untuk pergerakan lebih smooth
+
+ */
+
+function updateParallax() {
+
+    if (isMobile) {
+
+        // Untuk mobile, gunakan efek yang lebih minimal
+
+        parallaxLayers.forEach(layer => {
+
+            const speed = parseFloat(layer.getAttribute('data-speed')) * 0.4; // 40% intensity di mobile
+
+            const yPos = scrollPosition * speed;
+
+            layer.style.transform = `translate3d(0, ${yPos}px, 0)`;
+
+        });
+
+    } else {
+
+        // Untuk desktop, efek parallax penuh dengan easing
+
+        parallaxLayers.forEach(layer => {
+
+            const speed = parseFloat(layer.getAttribute('data-speed'));
+
+            
+
+            // Tambahkan easing untuk pergerakan yang lebih natural
+
+            const easedScroll = scrollPosition * speed;
+
+            
+
+            // Gabungkan dengan efek mouse untuk layer yang berbeda
+
+            const centerX = window.innerWidth / 2;
+
+            const centerY = window.innerHeight / 2;
+
+            const moveX = (mouseX - centerX) / centerX;
+
+            const moveY = (mouseY - centerY) / centerY;
+
+            
+
+            // Intensitas mouse movement berbeda per layer
+
+            const mouseIntensity = speed * 0.5;
+
+            const xMove = moveX * 30 * mouseIntensity;
+
+            const yMove = moveY * 30 * mouseIntensity;
+
+            
+
+            layer.style.transform = `translate3d(${xMove}px, ${easedScroll + yMove}px, 0)`;
+
+        });
+
+    }
+
+    
+
+    ticking = false;
+
+}
+
+
+
+/**
+
+ * Handle scroll untuk efek parallax dengan RAF throttling
+
+ */
+
+function handleScroll() {
+
+    scrollPosition = window.scrollY || window.pageYOffset;
+
+    
+
+    if (!ticking) {
+
+        requestAnimationFrame(() => {
+
+            updateParallax();
+
+            handleBackToTopVisibility();
+
+            handleScrollAnimations();
+
+            ticking = false;
+
+        });
+
+        ticking = true;
+
+    }
+
+}
+
+
+
+/**
+
+ * Handle mouse movement dengan smoothing
+
+ */
+
+function handleMouseMove(e) {
+
+    if (isMobile) return;
+
+    
+
+    // Smooth mouse movement dengan lerp
+
+    mouseX += (e.clientX - mouseX) * 0.1;
+
+    mouseY += (e.clientY - mouseY) * 0.1;
+
+    
+
+    // Update time untuk animasi
+
+    time += 0.01;
+
+    
+
+    // Trigger parallax update
+
+    if (!ticking) {
+
+        requestAnimationFrame(() => {
+
+            updateParallax();
+
+            ticking = false;
+
+        });
+
+        ticking = true;
+
+    }
+
+}
+
+
+
+// =============================================
+
+// PARTICLE EFFECTS
+
+// =============================================
+
+
+
+/**
+
+ * Membuat partikel untuk background effect
+
+ */
+
+function createParticles() {
+
+    if (!particlesContainer || isMobile) return;
+
+    
+
+    particlesContainer.innerHTML = '';
+
+    const particleCount = 50;
+
+    
+
+    for (let i = 0; i < particleCount; i++) {
+
+        const particle = document.createElement('div');
+
+        particle.className = 'particle';
+
+        
+
+        // Random properties
+
+        const size = Math.random() * 4 + 1;
+
+        const posX = Math.random() * 100;
+
+        const posY = Math.random() * 100;
+
+        const delay = Math.random() * 5;
+
+        const duration = Math.random() * 10 + 10;
+
+        
+
+        // Styling
+
+        particle.style.width = `${size}px`;
+
+        particle.style.height = `${size}px`;
+
+        particle.style.left = `${posX}%`;
+
+        particle.style.top = `${posY}%`;
+
+        particle.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+
+        particle.style.borderRadius = '50%';
+
+        particle.style.position = 'absolute';
+
+        particle.style.boxShadow = '0 0 10px rgba(90, 141, 238, 0.5)';
+
+        particle.style.opacity = '0';
+
+        
+
+        // Animation
+
+        particle.style.animation = `floatParticle ${duration}s ease-in-out ${delay}s infinite`;
+
+        
+
+        particlesContainer.appendChild(particle);
+
+    }
+
+    
+
+    // Add CSS for animation
+
+    const style = document.createElement('style');
+
+    style.textContent = `
+
+        @keyframes floatParticle {
+
+            0%, 100% { 
+
+                transform: translate(0, 0) scale(1); 
+
+                opacity: 0; 
+
+            }
+
+            10% { opacity: 0.7; }
+
+            50% { 
+
+                transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) scale(1.2); 
+
+                opacity: 0.3; 
+
+            }
+
+            90% { opacity: 0.7; }
+
+        }
+
+    `;
+
+    document.head.appendChild(style);
+
+}
+
+
+
+// =============================================
+
+// SCROLL ANIMATIONS
+
+// =============================================
+
+
+
+/**
+
+ * Handle semua animasi berdasarkan scroll position
+
+ */
+
+function handleScrollAnimations() {
+
+    // Hero content animation
+
+    if (heroContent && !heroContent.classList.contains('visible') && isInViewport(heroContent, 0.3)) {
+
+        heroContent.classList.add('visible');
+
+    }
+
+    
+
+    // Section headers animation
+
+    sectionHeaders.forEach(header => {
+
+        if (!header.classList.contains('visible') && isInViewport(header, 0.2)) {
+
+            header.classList.add('visible');
+
+        }
+
+    });
+
+    
+
+    // About content animation
+
+    if (aboutContent && !aboutContent.classList.contains('visible') && isInViewport(aboutContent, 0.1)) {
+
+        aboutContent.classList.add('visible');
+
+    }
+
+    
+
+    // Feature cards animation dengan staggering
+
+    featureCards.forEach((card, index) => {
+
+        if (!card.classList.contains('visible') && isInViewport(card, 0.1)) {
+
+            setTimeout(() => {
+
+                card.classList.add('visible');
+
+            }, index * 100);
+
+        }
+
+    });
+
+    
+
+    // Footer animations
+
+    if (footerContent && !footerContent.classList.contains('visible') && isInViewport(footerContent, 0.1)) {
+
+        footerContent.classList.add('visible');
+
+    }
+
+    
+
+    if (footerBottom && !footerBottom.classList.contains('visible') && isInViewport(footerBottom, 0.1)) {
+
+        footerBottom.classList.add('visible');
+
+    }
+
+}
+
+
+
+// =============================================
+
+// BACK TO TOP FUNCTIONS
+
+// =============================================
+
+
+
+/**
+
+ * Mengatur visibilitas back-to-top button dengan animasi smooth
+
+ */
+
+function handleBackToTopVisibility() {
+
+    if (scrollPosition > 500) {
+
+        backToTopBtn.classList.add('visible');
+
+    } else {
+
+        backToTopBtn.classList.remove('visible');
+
+    }
+
+}
+
+
+
+/**
+
+ * Scroll ke atas dengan animasi easing yang smooth
+
+ */
+
+function scrollToTop() {
+
+    const startPosition = window.pageYOffset;
+
+    const duration = 1000;
+
+    let startTime = null;
+
+    
+
+    // Easing function (easeInOutQuart)
+
+    function easeInOutQuart(t) {
+
+        return t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
+
+    }
+
+    
+
+    function animation(currentTime) {
+
+        if (startTime === null) startTime = currentTime;
+
+        const timeElapsed = currentTime - startTime;
+
+        const progress = Math.min(timeElapsed / duration, 1);
+
+        const easeProgress = easeInOutQuart(progress);
+
+        
+
+        window.scrollTo(0, startPosition * (1 - easeProgress));
+
+        
+
+        if (timeElapsed < duration) {
+
+            requestAnimationFrame(animation);
+
+        }
+
+    }
+
+    
+
+    requestAnimationFrame(animation);
+
+}
+
+
+
+// =============================================
+
+// INTERSECTION OBSERVER SETUP
+
+// =============================================
+
+
+
+/**
+
+ * Setup Intersection Observer untuk animasi yang lebih efisien
+
+ */
+
+function setupIntersectionObservers() {
+
+    const observerOptions = {
+
+        root: null,
+
+        rootMargin: '0px',
+
+        threshold: 0.1
+
+    };
+
+    
+
+    const observer = new IntersectionObserver((entries) => {
+
+        entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+
+                // Trigger animation berdasarkan elemen
+
+                if (entry.target.classList.contains('section-header')) {
+
+                    entry.target.classList.add('visible');
+
+                } else if (entry.target.classList.contains('feature-card')) {
+
+                    // Delay animation untuk card berdasarkan index
+
+                    const index = Array.from(featureCards).indexOf(entry.target);
+
+                    setTimeout(() => {
+
+                        entry.target.classList.add('visible');
+
+                    }, index * 100);
+
+                } else if (entry.target.classList.contains('about-content')) {
+
+                    entry.target.classList.add('visible');
+
+                } else if (entry.target.classList.contains('footer-content')) {
+
+                    entry.target.classList.add('visible');
+
+                } else if (entry.target.classList.contains('footer-bottom')) {
+
+                    entry.target.classList.add('visible');
+
+                }
+
+                
+
+                // Stop observing setelah animasi di-trigger
+
+                observer.unobserve(entry.target);
+
+            }
+
+        });
+
+    }, observerOptions);
+
+    
+
+    // Observe semua elemen yang perlu animasi
+
+    sectionHeaders.forEach(header => observer.observe(header));
+
+    featureCards.forEach(card => observer.observe(card));
+
+    if (aboutContent) observer.observe(aboutContent);
+
+    if (footerContent) observer.observe(footerContent);
+
+    if (footerBottom) observer.observe(footerBottom);
+
+}
+
+
+
+// =============================================
+
+// INITIALIZATION
+
+// =============================================
+
+
+
+/**
+
+ * Inisialisasi semua event listeners dengan optimasi
+
+ */
+
+function initEventListeners() {
+
+    // Scroll events dengan throttling untuk performa
+
+    window.addEventListener('scroll', rafThrottle(handleScroll));
+
+    window.addEventListener('scroll', smoothDebounce(handleNavbarOnScroll, 10));
+
+    
+
+    // Resize event dengan debounce
+
+    window.addEventListener('resize', smoothDebounce(checkIfMobile, 150));
+
+    
+
+    // Hamburger menu
+
+    hamburger.addEventListener('click', toggleHamburgerMenu);
+
+    
+
+    // Smooth scroll untuk nav links
+
+    navLinks.forEach(link => {
+
+        link.addEventListener('click', smoothScroll);
+
+    });
+
+    
+
+    // Close menu ketika klik di luar
+
+    document.addEventListener('click', (e) => {
+
+        if (navMenu.classList.contains('active') &&
+
+            !hamburger.contains(e.target) && 
+
+            !navMenu.contains(e.target)) {
+
+            toggleHamburgerMenu();
+
+        }
+
+    });
+
+    
+
+    // Back to top button
+
+    backToTopBtn.addEventListener('click', scrollToTop);
+
+    
+
+    // Mouse move untuk efek parallax tambahan (hanya desktop)
+
+    if (!isMobile) {
+
+        document.addEventListener('mousemove', rafThrottle(handleMouseMove));
+
+    }
+
+    
+
+    // Prevent context menu on long press
+
+    document.addEventListener('contextmenu', (e) => {
+
+        if (e.target.closest('.hero')) {
+
+            e.preventDefault();
+
+        }
+
+    });
+
+}
+
+
+
+/**
+
+ * Inisialisasi aplikasi dengan animasi bertahap
+
+ */
+
+function init() {
+
+    // Set tahun saat ini di footer
+
+    if (currentYear) {
+
+        currentYear.textContent = new Date().getFullYear();
+
+    }
+
+    
+
+    // Set initial styles untuk animasi masuk
+
+    document.body.style.opacity = '0';
+
+    navbar.style.opacity = '0';
+
+    navbar.style.transform = 'translateY(-20px)';
+
+    navbar.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+
+    
+
+    // Cek apakah perangkat mobile
+
+    checkIfMobile();
+
+    
+
+    // Setup text splitting animations
+
+    setupTextSplitting();
+
+    
+
+    // Setup intersection observers
+
+    setupIntersectionObservers();
+
+    
+
+    // Inisialisasi event listeners
+
+    initEventListeners();
+
+    
+
+    // Handle preloader
+
+    handlePreloader();
+
+    
+
+    // Fade in body
+
+    setTimeout(() => {
+
+        document.body.style.transition = 'opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s';
+
+        document.body.style.opacity = '1';
+
+    }, 100);
+
+    
+
+    // Create particles jika bukan mobile
+
+    if (!isMobile && particlesContainer) {
+
+        createParticles();
+
+    }
+
+    
+
+    console.log('Parallax Website dengan Animasi Halus telah diinisialisasi!');
+
+}
+
+
+
+// =============================================
+
+// DEVELOPER NOTES - ANIMASI LEBIH HALUS
+
+// =============================================
+
+
+
+/*
+
+ * PERBAIKAN ANIMASI YANG DITERAPKAN:
+
+ * 
+
+ * 1. EASING FUNCTIONS:
+
+ *    - Menggunakan cubic-bezier(0.16, 1, 0.3, 1) untuk transisi masuk yang smooth
+
+ *    - Menggunakan cubic-bezier(0.68, -0.55, 0.265, 1.55) untuk efek bounce
+
+ *    - Easing custom untuk scroll animations
+
+ * 
+
+ * 2. PERFORMANCE OPTIMIZATIONS:
+
+ *    - RAF throttling untuk scroll dan mouse events
+
+ *    - Smooth debounce untuk resize events
+
+ *    - Will-change hanya untuk elemen yang bergerak
+
+ *    - Hardware acceleration dengan translate3d
+
+ * 
+
+ * 3. SMOOTHER PARALLAX:
+
+ *    - Lerp (linear interpolation) untuk mouse movement
+
+ *    - Eased scroll calculations
+
+ *    - Layer-based mouse intensity
+
+ * 
+
+ * 4. STAGGERED ANIMATIONS:
+
+ *    - Animasi berurutan untuk cards dan list items
+
+ *    - Text splitting per karakter
+
+ *    - Different delays untuk floating elements
+
+ * 
+
+ * 5. MOBILE OPTIMIZATIONS:
+
+ *    - Reduced parallax intensity (40%)
+
+ *    - Disabled heavy effects
+
+ *    - Performance-aware animations
+
+ * 
+
+ * 6. VISUAL ENHANCEMENTS:
+
+ *    - Gradient overlays
+
+ *    - Glow effects
+
+ *    - Particle system
+
+ *    - Smooth shadows and borders
+
+ * 
+
+ * CARA KUSTOMISASI ANIMASI:
+
+ * 1. Kecepatan parallax: Ubah data-speed di HTML (0.1-0.9)
+
+ * 2. Durasi animasi: Ubah transition durations di CSS variables
+
+ * 3. Easing curves: Ubah cubic-bezier values
+
+ * 4. Stagger delays: Ubah delay di JavaScript setTimeout
+
+ * 
+
+ * UNTUK PERFORMANCE TERBAIK:
+
+ * 1. Gunakan WebP format untuk gambar
+
+ * 2. Optimasi gambar size (max 500KB)
+
+ * 3. Gunakan CDN untuk assets
+
+ * 4. Nonaktifkan effects di perangkat rendah
+
+ */
+
+
+
+// =============================================
+
+// START APPLICATION
+
+// =============================================
+
+
+
+// Tunggu DOM selesai dimuat sebelum inisialisasi
+
+if (document.readyState === 'loading') {
+
+    document.addEventListener('DOMContentLoaded', init);
+
+} else {
+
+    // Jika DOM sudah loaded, jalankan langsung
+
+    init();
+
+}
+
+
+
+// Fallback untuk browser lama
+
+if (!window.requestAnimationFrame) {
+
+    window.requestAnimationFrame = function(callback) {
+
+        return setTimeout(callback, 1000 / 60);
+
+    };
+
+}
+
+
+
+if (!window.cancelAnimationFrame) {
+
+    window.cancelAnimationFrame = function(id) {
+
+        clearTimeout(id);
+
+    };
+
+}
+
+    </script>
+
+</body>
+
+</html>
